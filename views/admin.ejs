@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+	<script src="http://49.212.196.112:8124/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="/javascripts/client.js"></script>
+	<script type="text/javascript">
+	var $LCInput;
+	
+	$.fn.extend({
+		insertAtCaret: function(v) {
+			var o = this.get(0);
+			o.focus();
+			if (jQuery.browser.msie) {
+				var r = document.selection.createRange();
+				r.text = v;
+				r.select();
+			}
+			else
+			{
+				var s = o.value;
+				var p = o.selectionStart;
+				var np = p + v.length;
+				o.value = s.substr(0, p) + v + s.substr(p);
+				o.setSelectionRange(np, np);
+			}
+		}
+	});
+	
+	$(function(){
+		$LCInput = $('#LCInput');	
+		$LCInput.keydown(function(e){
+			switch (e.keyCode)
+			{
+			case 13: //enter
+			case 32: //space
+			case 27: //escape
+			case 17: //control
+			case 16: //shift
+			case 18: //option
+			case 37: case 38: case 39: case 40://arrow
+				return;
+			case 9://tab
+				$LCInput.insertAtCaret('	');
+				e.preventDefault();
+				break;
+			default:
+				updateCode();
+				break;
+			}
+		});
+	});
+	
+	function updateCode() {
+		socket.emit('updateCode', {
+			code:$LCInput.val()
+		});		
+	}
+	
+	function refresh() {
+		$LCInput.val('');
+		updateCode();
+	}
+	</script>
+	</head>
+	<body>
+		<h1>管理画面</h1>
+		<button onclick="updateCode();">更新</button>
+		<button onclick="refresh();">リセット</button>
+		<br>
+		<textarea id="LCInput" style="width:500px; height:500px;"></textarea>
+	</body>
+</html>
