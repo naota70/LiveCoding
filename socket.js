@@ -163,11 +163,12 @@ handleReloadURL = function(socket, url){
         
         // DBに保存
         BroadCastURL.find({}, null, {limit:1}, function(err, data){                
-            console.log('error:', err, typeof data[0]._id);
+            console.log('error:', err);
             
             if (err) return;
             
-            if (data.lenght === 0 || data[0]._id === undefined)
+            // 新規保存
+            if (data[0] === undefined || data[0]._id === undefined)
             {
                 var broadCastURL = new BroadCastURL();    
                     broadCastURL.url = url;
@@ -175,6 +176,7 @@ handleReloadURL = function(socket, url){
                         if (err) console.log(err);
                     });
             }
+            // 上書き保存
             else
             {
                 BroadCastURL.update(
