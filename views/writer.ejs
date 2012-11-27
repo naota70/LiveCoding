@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<meta name="author" content="SRTスタヂオ" />
+	<meta name="viewport" content="width=1024,initial-scale=1,user-scalable=no,maximum-scale=1">
+	<link rel="home" href="http://srt-s.com/" />
+	<title>管理画面｜<%= title %></title>
+	<meta name="author" content="nao太, たかぴ">
+	<meta name="copyright" content="Copyright SRTスタヂオ">
+	<meta name="robots" content="noindex, nofollow, noodp, noydir">
+	<link rel="icon" type="" href="images/favicon.png" type="image/png">
+	<link rel="stylesheet" href="stylesheets/common.css" media="screen" charset="UTF-8">
+	<link rel="stylesheet" href="stylesheets/SourceTab.css" media="screen" charset="UTF-8">
+	<link rel="stylesheet" href="stylesheets/writer-style.css" media="screen" charset="UTF-8">
+    <!--LibraryJS-->
+    <script src="/socket.io/socket.io.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script src="javascripts/SourceTab.js" charset="UTF-8"></script>
+	<!--ClientJS-->
+	<script src="javascripts/clientWriterCore.js" charset="UTF-8"></script>
+	<script src="javascripts/clientWriterEvent.js" charset="UTF-8"></script>
+	<script src="javascripts/clientWriterEventSocketio.js" charset="UTF-8"></script>
+	<script>
+		$(initialize);
+	</script>
+</head>
+	<body>
+		<div id="header" class="non-select">
+			<header><nav>
+			<ul class="clearfix">
+				<li id="new-file-container">
+					<h2>新規作成</h2>
+					<input type="text" id="new-file">
+				</li>
+				<li id="button-container">
+					<h2>データベース<span style="font-size: 0.8em; color:#666;">　※ コードをドラッグ選択 → 同期 = ハイライト</span></h2>
+					<button id="synchronize">同期</button>
+					<button id="new-save">新規保存</button>
+					<button id="update-save">上書き保存</button>
+					<button id="load-file">DBから復元</button>
+				</li>
+				<li id="niconico-container">
+					<h2>ニコ生枠の更新</h2>
+					<input type="text" id="reload-iframe" value="<%= url %>">
+				</li>
+			</ul>
+			</nav></header>
+		</div>
+		<div id="coding-container">
+		</div>		
+	</body>
+</html>

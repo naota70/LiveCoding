@@ -1,0 +1,113 @@
+/**
+ * 	tab
+ */
+
+#tab-container{
+	position:absolute;
+	top:-25px;
+	height:25px;
+	overflow: hidden;
+}
+
+#tab-container > ul{
+	line-height:0px;
+	font-size:12px;
+}
+
+#tab-container > ul > .tab{
+	position:relative;
+	float:left;
+	height:25px;
+	margin-right: -10px;
+	padding: 0 17px;
+	background-image	: url(../images/sprite.png), url(../images/sprite.png), url(../images/sprite.png);
+	background-position : left -110px, right -135px, 0px -185px;
+	background-repeat	: no-repeat, no-repeat, repeat-x;
+	background-clip		: padding-box, padding-box, content-box;
+	z-index: 100;
+	color:#999;
+	cursor: pointer;
+}
+
+#tab-container > ul > .tab.active{
+	background-position : left -60px, right -85px, 0px -160px;
+	z-index: 200;
+	color:#333;
+	cursor: default !important;
+}
+
+#tab-container > ul > .tab > p{
+	line-height: 28px;
+	overflow: hidden;
+	white-space: pre;
+}
+
+/**
+ * page
+ */
+#page-container{
+	position:relative;
+	display: inline;
+	width:100%;
+	height:100%;
+	/*font-size: 15px;*/
+	background-color: #eee;
+}
+
+#page-container > .page {
+	display: none;
+	overflow: auto;
+	margin: 5px;
+	background-color: #eee;
+	word-break: break-all;
+}
+
+#page-container > .page.active {
+	display: block;
+}
+
+/**
+ * Editable	
+ */
+#page-container > .page > .editable-container{
+	font-size: 20px;
+	line-height: 1.4;
+	padding: 10px;
+	margin-top: 8px;
+}
+
+.close-button{
+	position: absolute;
+	right: 14px;
+	bottom: 4px;
+	z-index:1000;
+	margin:0;
+	padding:0;
+	width:14px;
+	height:14px;
+	border-radius: 14px;
+	border: 1px solid rgba(0,0,0,0);
+
+	font-size: 13px;
+	line-height: 14px;
+	color: #666;
+	text-align: center;
+	cursor: pointer;
+}
+
+.close-button:hover{
+	color:#fff;
+	text-shadow: 0px 1px 0px #000;
+	background-color:#E88D90;
+	border: 1px solid #CA5E5E;
+}
+
+.close-button:active{
+	background-color:#BC484C;
+	text-shadow: 0px 1px 0px #000;
+}
+
+.enable-rename {
+	border: 1px solid #666;
+	background-color:#fff;
+}

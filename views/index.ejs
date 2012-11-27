@@ -1,33 +1,158 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href='/stylesheets/shCore.css' />
-    <link rel='stylesheet' href='/stylesheets/shThemeDefault.css' />
-	<script src="http://49.212.196.112:8124/socket.io/socket.io.js"></script>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script type="text/javascript" src="/javascripts/shCore.js"></script>
-	<script type="text/javascript" src="/javascripts/shBrushJScript.js"></script>
-	<script src="/javascripts/client.js"></script>
-	<script type="text/javascript">
-	var $liveCoderWrap;
-	$(function(){
-		$liveCoderWrap = $('#liveCoderWrap');
-		
-		socket.on('sendingCode', function(data){
-			$liveCoderWrap.html( '<pre class="brush:js">' + data.code + '</pre>' );// 代入
-			SyntaxHighlighter.all();
-		});
-	});
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<meta name="author" content="SRTスタヂオ" />
+	<meta name="viewport" content="width=1024,initial-scale=1,user-scalable=no,maximum-scale=1">
+	<link rel="home" href="http://srt-s.com/" />
+	<title><%= title %></title>
+	<meta name="keywords" content="SRTスタヂオ, ライブコーディング, livecoding, プログラミング？なにそれおいしいの？, nao太, たかぴ, ニコニコ生放送">
+	<meta name="description" content="プログラミング番組「プログラミング？なにそれおいしいの？」での使用を目的に同番組内で制作されたプロダクト。番組は毎週火曜日20時からニコ生にて放送中。">
+	<meta http-equiv="X-UA-Compatible" content="IE=emulateIE9">
+	<meta property="fb:admins" content="100000866850893">
+	<meta property="og:title" content="ライブコーディング｜SRTスタヂオ">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="http://livecoding.srt-s.com/">
+	<meta property="og:image" content="http://livecoding.srt-s.com/images/thumb.gif">
+	<meta property="og:site_name" content="ライブコーディング｜SRTスタヂオ">
+	<meta property="og:description" content="プログラミング番組「プログラミング？なにそれおいしいの？」での使用を目的に同番組内で制作されたプロダクト。番組は毎週火曜日20時からニコ生にて放送中。">
+	<meta name="author" content="nao太, たかぴ">
+	<meta name="copyright" content="Copyright SRTスタヂオ">
+	<meta name="robots" content="noydir">
+	<meta name="robots" content="noodp">
+	<meta name="robots" content="index,follow">
+	<link rel="icon" type="" href="images/favicon.png" type="image/png">
+<!--StyleSheet-->
+	<link rel="stylesheet" href="stylesheets/common.css" media="screen" charset="UTF-8">
+	<link rel="stylesheet" href="stylesheets/SourceTab.css" media="screen" charset="UTF-8">
+	<link rel="stylesheet" href="stylesheets/reader-style.css" media="screen" charset="UTF-8">
+	<!--[if IE]><link rel="stylesheet" href="stylesheets/ie.css" media="screen" charset="UTF-8"><![endif]-->
+    <link rel="stylesheet" href='stylesheets/shCore.css' />
+    <link rel="stylesheet" href='stylesheets/shThemeDefault.css' id="currentTheme" />
+	<style type="text/css" id="inline-syle"></style>
+<!--LibraryJS-->
+    <script src="/socket.io/socket.io.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script src="javascripts/shCore.js" charset="UTF-8"></script>
+	<script src="javascripts/shBrushXml.js" charset="UTF-8"></script>
+	<script src="javascripts/shBrushCss.js" charset="UTF-8"></script>
+	<script src="javascripts/shBrushJScript.js" charset="UTF-8"></script>
+	<script src="javascripts/SourceTab.js" charset="UTF-8"></script>
+<!--ClientJS-->
+	<script src="javascripts/clientReaderCore.js" charset="UTF-8"></script>
+	<script src="javascripts/clientReaderEvent.js" charset="UTF-8"></script>
+	<script src="javascripts/clientReaderEventResize.js" charset="UTF-8"></script>
+	<script src="javascripts/clientReaderEventSocketio.js" charset="UTF-8"></script>
+	<script>
+		// IEのみonloadを設定
+		if ( navigator.userAgent.indexOf("MSIE") === -1 ) $(initialize);
+		else window.onload = initialize;
 	</script>
 </head>
 <body>
-<div id="liveCoderWrap">
-<pre class="brush:js" id="LCViewer">
-var test = function(){
-	var i = 9;
-}</pre>
-</div>
+	<div id="header-container" class="flow-box non-select">
+		<header>
+			<h1 class="sprite-image">SRTスタヂオ ライブコーディング</h1>
+			<div id="social-container">
+				<a href="https://twitter.com/srt_s" class="twitter-follow-button" data-show-count="false" data-lang="ja">@srt_sさんをフォロー</a>
+				<div class="fb-like" data-href="http://livecoding.srt-s.com/" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false" data-colorscheme="dark" data-font="verdana"></div>
+			</div>
+		</header>
+	</div>
+	<div id="main-container" class="flow-box">
+	    <div id="broadcast-container" class="flow-box">
+	    	<div id="broadcast-inner-container" class="flow-box">
+	        <iframe id="broadcast" class="flow-box" src="<%= url %>" name="broadcast">
+	        </iframe>
+	        </div>
+	    </div>
+	    <div id="livecoding-container">
+	    	<div id="loading"><img src="/images/loader.gif" width="16" height="11" alt="source code now loading..." /></div>
+		</div>
+		
+		<div id="handle-container" class="non-select">
+			<ul id="resize-handle">
+				<li id="handle-left-most" class="handle"><p>左端へ</p></li>
+				<li id="handle-resize" class="handle"><p>分割率の調整</p></li>
+				<li id="handle-right-most" class="handle"><p>右端へ</p></li>
+			</ul>
+		</div>
+	</div>
+	<div id="footer-container" class="flow-box">
+		<footer>
+			<div id="setting-container" class="non-select">
+				<section>
+					<div id="setting-close" class="setting-flame">
+						<p>×</p>
+					</div>
+				</section>
+				
+				<section>
+					<div id="mirroring-description">
+						<p>※ ミラーリング機能とは、コーディング画面の選択しているタブやスクロールの動きを、生主のものと連動させる機能です。</p>
+					</div>
+				</section>
+				
+				<section>
+					<div id="text-wrap-config" class="setting-flame">
+						<h3>コードの折り返し</h3>
+						<ul>
+							<li id="text-wrap-on"><p>折り返す</p></li>
+							<li id="text-wrap-off"><p>折り返さない</p></li>
+						</ul>
+					</div>
+				</section>
+				<section>
+					<div id="font-size-config" class="setting-flame">
+						<h3>フォントサイズ</h3>
+						<ul>
+							<li id="font-size-small"><p>小</p></li>
+							<li id="font-size-medium"><p>中</p></li>
+							<li id="font-size-large"><p>大</p></li>
+						</ul>
+					</div>
+				</section>
+				<section>
+					<div id="theme-config" class="setting-flame">
+						<h3>カラーテーマ</h3>
+						<ul>
+							<li id="theme-default"><p>Default</p></li>
+							<li id="theme-django"><p>Django</p></li>
+							<li id="theme-eclipse"><p>Eclipse</p></li>
+							<li id="theme-emas"><p>Emacs</p></li>
+							<li id="theme-fadetogrey"><p>FadeToGrey</p></li>
+							<li id="theme-midnight"><p>Midnight</p></li>
+							<li id="theme-rdark"><p>RDark</p></li>
+						</ul>
+					</div>
+				</section>
+			</div>
+			
+			<div id="broadcast-controler" class="controler non-select">
+				<section>
+					<ul class="controler-container">
+						<li id="controler-commu"><div class="icon"></div><p>ニコニコミュニティに入る</p></li>
+						<!-- <li id="controler-info"><div class="icon"></div><p>番組情報</p></li> -->
+						<li id="controler-reload"><div class="icon"></div><p>ニコ生の更新</p></li>
+					</ul>
+				</section>
+			</div>
+			<div id="livecoding-controler" class="controler non-select">
+				<section>
+					<ul class="controler-container">
+						<li id="controler-setting"><div class="icon"></div><p>設定の変更</p></li>
+						<li id="controler-mirror"><div class="icon"></div><p>ミラーリング機能</p></li>
+					</ul>
+				</section>
+			</div>
+			<div id="copyrights">
+				<ul>
+					<li><p>©&nbsp;<a href="http://srt-s.com/" target="_blank">SRTスタヂオ</a>,&nbsp;<a href="https://twitter.com/naota70" target="_blank">nao太</a>,&nbsp;<a href="https://twitter.com/yaoce" target="_blank">たかぴ</a>.</p></li>
+				</ul>				
+			</div>
+		</footer>
+	</div>
+<script src="//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=589294767763461" id="facebook-jssdk" charset="UTF-8"></script>
+<script src="//platform.twitter.com/widgets.js" id="twitter-wjs" charset="UTF-8"></script>
 </body>
 </html>

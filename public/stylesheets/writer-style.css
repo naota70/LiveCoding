@@ -1,0 +1,69 @@
+/**
+ * 	wrap
+ */
+body{
+	background-color: #333;
+	min-width: 1024px;
+}
+
+#header{
+	background-color: #2b2b2b;
+	border: 1px solid #000;
+	border-radius: 5px;
+	box-shadow: 0px 1px 0px #444, 0px 0px 5px rgba(0, 0, 0, 0.2) inset;
+	margin:5px;
+}
+
+#header h2{
+	margin-bottom:5px;
+	font-size:13px;
+	color:#ccc;
+}
+
+#header h3{
+	color: #666;
+	font-size: 13px;
+	line-height: 40px;
+	font-style: italic;
+}
+
+#header > ul{
+	position: relative;
+}
+
+#header li{
+	float: left;
+	padding: 10px 20px 10px 60px;
+	border-right: 1px solid #000;
+	border-left: 1px solid #444;
+	list-style: none;
+	background-image: url(../images/writer_sprite.png);
+	background-repeat: no-repeat;
+}
+
+#header #new-file-container{
+	background-position:5px -2px;
+	border-left: none;
+}
+
+#header #button-container{
+	background-position:5px -72px;
+	border-right: none;
+}
+
+#header #niconico-container{
+	background-position:5px -142px;
+	float: right;
+	border: none;
+}
+
+#new-file {
+	width:200px;
+}
+#reload-iframe {
+	width:250px;
+}
+
+#coding-container{
+	margin: 30px 0 0;
+}
